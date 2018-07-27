@@ -24,7 +24,7 @@ services:
             dockerfile: release/rails/Dockerfile
         image: local-rails
         volumes:
-            - /Users/ferbueno/workspace/ruby/getting_started/ruby_angular/back:/myapp:rw
+            - ../back:/myapp:rw
         ports:
             - "3000:3000"
         restart: always

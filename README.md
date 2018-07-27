@@ -6,6 +6,14 @@ This means it will create an image for Angular, Rails and Percona and deploy it 
 
 The back-end project can be seen [here.](https://github.com/ferbueno/ruby-angular-back)
 
+For this project to work, all projects must be on the same level of the directory, and with these specific names respectively:
+
+```bash
+├── release
+├── back
+└── ui
+```
+
 ## build.sh
 
 The build file will build the docker images to be deployed.
