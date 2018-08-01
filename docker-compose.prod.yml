@@ -1,0 +1,50 @@
+version: '3.3'
+
+services:
+    mariadb:
+        image: percona:5.6
+        environment:
+            - MYSQL_ROOT_PASSWORD=rubyangularrootpassword
+            - MYSQL_DATABASE=rubyangular
+            - MYSQL_USER=username
+            - MYSQL_PASSWORD=rubyangularpassword
+        volumes:
+            - mydata:/var/lib/mysql
+        restart: always
+        ports:
+            - "4306:3306"
+        container_name: rubyangular_mariadb
+        networks:
+            - rubyangular
+    api:
+        depends_on:
+            - mariadb
+        build: 
+            context: ../
+            dockerfile: release/rails/prod/Dockerfile
+        image: rubyangular-rails:prod
+        ports:
+            - "3000:3000"
+        restart: always
+        container_name: rubyangular_api
+        networks:
+            - rubyangular
+    ui:
+        depends_on:
+            - api
+        build:
+            context: ../
+            dockerfile: release/angular/prod/Dockerfile
+        image: rubyangular-angular:prod
+        ports:
+            - "80:80"
+        restart: always
+        container_name: rubyangular_ui
+        networks:
+            - rubyangular
+
+volumes:
+    mydata:
+networks:
+    rubyangular:
+        driver: overlay

@@ -16,21 +16,38 @@ services:
         container_name: rubyangular_mariadb
         networks:
             - rubyangular
-    rails:
+    api:
         depends_on:
             - mariadb
         build: 
             context: ../
-            dockerfile: release/rails/Dockerfile
-        image: local-rails
+            dockerfile: release/rails/dev/Dockerfile
+        image: rubyangular-rails
         volumes:
             - ../back:/myapp:rw
         ports:
             - "3000:3000"
+            - "1234:1234"
         restart: always
-        container_name: rubyangular_rails
+        container_name: rubyangular_api
         networks:
             - rubyangular
+    ui:
+        depends_on:
+            - api
+        build:
+            context: ../
+            dockerfile: release/angular/dev/Dockerfile
+        image: rubyangular-angular
+        volumes:
+            - ../ui:/app:rw
+        ports:
+            - "4200:4200"
+        restart: always
+        container_name: rubyangular_ui
+        networks:
+            - rubyangular
+
 volumes:
     mydata:
 networks:
