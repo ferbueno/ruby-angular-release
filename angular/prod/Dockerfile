@@ -1,5 +1,5 @@
 #Start with nginx
-FROM nginx:1.13-alpine
+FROM nginx:1.13.3-alpine
 
 #Remove original NGINX html
 RUN rm -rf /usr/share/nginx/html/*
